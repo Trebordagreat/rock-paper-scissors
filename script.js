@@ -1,5 +1,4 @@
 // Game of Rock Paper Scissors
-let playerSelection = "Scissors"
 console.log(game())
 
 // Have the computer randomly choose either rock, paper, or scissor
@@ -48,7 +47,7 @@ function gameRound(playerSelection, computerSelection) {
             return("You Lost! Scissors beats Paper");
         }
     }
-    else {
+    else if (play === "SCISSORS") {
         if (comp === "ROCK") {
             return("You Lost! Rock beats Scissors");
         }
@@ -56,7 +55,10 @@ function gameRound(playerSelection, computerSelection) {
             return("You Won! Scissors beats Paper")
         }
     }
-    // I will have to add return value that can then be added to the total scores in the game
+    // Condition for invalid player entry
+    else {
+        return "has error";
+    }
 }
 
 // Create a function that repeats all of the above steps 5 times
@@ -66,13 +68,22 @@ function game() {
     let computer = 0;
 
     for (let i = 0; i < 5; i++) {
+        // Prompt user to select item
+        let playerSelection = prompt("Rock, Paper, or Scissors")
+        
+        // Runs a round of the game
         let game = gameRound(playerSelection, computerPlay());
         console.log(game);
         // Grab the second word from gameRound string to get result.
         let result = game.split(" ")[1];
 
+        // Add condition for user input error
+        if (result === "error") {
+            return "Please input either Rock, Paper, or Scissors";
+        }
+
         // Based on second word, add score to player or computer variabler
-        if (result === "Won!") {
+        else if (result === "Won!") {
             player = player + 1;
         }
         else if (result === "Lost!") {
@@ -91,5 +102,3 @@ function game() {
         return "No winners or losers today";
     }
 }
-
-// In this function, create a prompt that asks user for their input.
