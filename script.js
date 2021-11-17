@@ -1,5 +1,11 @@
 // Game of Rock Paper Scissors
-console.log(game())
+
+const buttons = document.querySelectorAll('button');
+buttons.forEach((button) => {
+    button.addEventListener('click', () => {
+        alert(gameRound(button.id, computerPlay()));
+    });
+});
 
 // Have the computer randomly choose either rock, paper, or scissor
 function computerPlay() {
@@ -67,7 +73,7 @@ function game() {
     let player = 0;
     let computer = 0;
 
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 1; i++) {
         // Prompt user to select item
         let playerSelection = prompt("Rock, Paper, or Scissors")
         
