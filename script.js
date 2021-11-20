@@ -1,27 +1,49 @@
 // Game of Rock Paper Scissors
 
+
+// Edit a div to display the results of a game
+const results = document.querySelector('#results');
+results.textContent = "Press a button to begin";
+
+// Running Scores than announce winner at end
+const playScore = document.querySelector('#playerScore');
+playScore.textContent = "Player Score: 0";
+const compScore = document.querySelector('#computerScore');
+compScore.textContent = "Computer Score: 0"; 
 const buttons = document.querySelectorAll('button');
-buttons.forEach((button) => {
+let player = 0;
+let computer = 0;
+
+
+// Test area
+
+buttons.forEach(button => {
     button.addEventListener('click', () => {
-        alert(gameRound(button.id, computerPlay()));
+        scoreUpdate(button.id);
     });
 });
 
-// Have the computer randomly choose either rock, paper, or scissor
-function computerPlay() {
-    // Select random number where each number equates to a position
-    id = Math.floor(Math.random() * 3);
-    
-    // Match number to position and return position as a string
-    if (id === 0) {
-        return "Rock";
+function scoreUpdate(button) {
+    if (player < 5 && computer < 5) {
+        gameResult = gameRound(button, computerPlay());
+        results.textContent = gameResult;
+        let result = gameResult.split(" ")[1];
+        if (result === "Won!") {
+            player = player + 1;
+            playScore.textContent = `Player Score: ${ player }`;
+        }
+        else if (result === "Lost!") {
+            computer = computer + 1;
+            compScore.textContent = `Computer Score: ${ computer }`;
+        }
     }
-    else if (id === 1) {
-        return "Paper";
+    if (player === 5) {
+        results.textContent = "The player has won the game.  Congratulations!";
     }
-    else {
-        return "Scissors";
+    else if (computer === 5) {
+        results.textContent = "The computer has won the game.  Try harder next time";
     }
+    return 0;    
 }
 
 // Compare the random computer answer with an input from the player to see who wins.
@@ -67,44 +89,19 @@ function gameRound(playerSelection, computerSelection) {
     }
 }
 
-// Create a function that repeats all of the above steps 5 times
-function game() {
-    // Add variables to keep track of player and computer scores
-    let player = 0;
-    let computer = 0;
-
-    for (let i = 0; i < 1; i++) {
-        // Prompt user to select item
-        let playerSelection = prompt("Rock, Paper, or Scissors")
-        
-        // Runs a round of the game
-        let game = gameRound(playerSelection, computerPlay());
-        console.log(game);
-        // Grab the second word from gameRound string to get result.
-        let result = game.split(" ")[1];
-
-        // Add condition for user input error
-        if (result === "error") {
-            return "Please input either Rock, Paper, or Scissors";
-        }
-
-        // Based on second word, add score to player or computer variabler
-        else if (result === "Won!") {
-            player = player + 1;
-        }
-        else if (result === "Lost!") {
-            computer = computer + 1;
-        }
-
+// Have the computer randomly choose either rock, paper, or scissor
+function computerPlay() {
+    // Select random number where each number equates to a position
+    id = Math.floor(Math.random() * 3);
+    
+    // Match number to position and return position as a string
+    if (id === 0) {
+        return "Rock";
     }
-    // After the game has played out five times, compare scores and announce winner.
-    if (player > computer) {
-        return "You have won Rock Paper Scissors! Congratulations";
-    }
-    else if (player < computer) {
-        return "You have lost Rock Paper Scissors. You're bad";
+    else if (id === 1) {
+        return "Paper";
     }
     else {
-        return "No winners or losers today";
+        return "Scissors";
     }
 }
